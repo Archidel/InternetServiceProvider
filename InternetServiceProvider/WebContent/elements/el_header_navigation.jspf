@@ -1,0 +1,252 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<style>
+		.navbar {
+	      	margin-bottom: 50px;
+	      	border-radius: 0;
+	    } 
+	     .jumbotron {
+	      	margin-bottom: 0;
+	    }
+			background-color: #f2f2f2;
+	    	padding: 25px;
+	    }
+	</style>
+</head>
+<body>
+	<nav class="navbar navbar-inverse" role="navigation">
+		<div class="container-fluid">
+	 
+<!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+		       	<span class="sr-only">Toggle navigation</span>
+		       	<span class="icon-bar"></span>
+		       	<span class="icon-bar"></span>
+		       	<span class="icon-bar"></span>
+		    </button>
+		    
+<!-- REPIRE FORM -->
+		    <form action="Controller" method="post" class="navbar-form">
+				<h5><a href="index"><button type="button" class="btn btn-link ">Game Store</button></a></h5>
+			</form>	
+		</div>
+
+<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      			
+<!-- Left navbar -->
+      		<ul class="nav navbar-nav">
+<!-- link NEWS -->
+				<li>
+					<form action="Controller" method="post" class="navbar-form">
+						<a href="error"><button type="button" class="btn btn-link "><span class="glyphicon glyphicon glyphicon-list-alt"></span> NEWS</button></a>
+					</form>		
+				</li>	
+<!-- dropdown list gameplay -->
+				<li class="dropdown">
+			    	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Trafics<span class="caret"></span></a>     
+				  	<form class="dropdown-menu" action="Controller" method="get">
+				      	<div class="form-group">
+				    		<input type="hidden" name="command" value="search" />
+				     		<button type="submit" name="search_gameplay" value="cooperative" class="btn btn-default form-control">Phisical face</button> 
+				        	<button type="submit" name="search_gameplay" value="multiplayer" class="btn btn-default form-control">Jur face</button> 
+				        </div>
+					</form>
+			 	</li>
+			        
+<!-- dropdown list ganre -->   
+				<li class="dropdown">
+			    	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">For client <span class="caret"></span></a>     
+				    <form class="dropdown-menu" action="Controller" method="get">
+				    	<div class="form-group">
+				        	<input type="hidden" name="command" value="search" />
+				          	<button type="submit" name="search_genre" value="action" class="btn btn-default form-control">Akcii</button>
+				        </div>
+				  	</form>
+			  	</li>
+      		</ul><!-- End left navbar -->
+      
+	<!-- Right navbar -->
+      		<ul class="nav navbar-nav navbar-right"> <%-- 
+      			<c:if test="${sessionScope.logged != true}"> --%>
+					<li><a href="#signup" data-toggle="modal" data-target=".bs-modal-sm"><span class="glyphicon glyphicon-log-in"></span> account</a></li>
+				<%-- </c:if> 
+        		<c:if test="${sessionScope.logged == true}"> --%>
+<!-- dropdown list личный кабинет -->
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> ${personal_user_accaunt} <span class="caret"></span></a>     
+						<form class="dropdown-menu" action="Controller" method="get">
+					      	<div class="form-group">  		
+ <!-- administration --><%-- 
+					      		<c:if test="${user.accessLevel == 2}">
+					     --%>   			<a href="administration" ><button type="button" class="btn btn-default form-control">${admin_user_account}</button> </a>
+					       	<!-- 	</c:if>
+					       	 -->	<a href="edituser"><button type="button" class="btn btn-default form-control">${profile_user_accaunt}</button></a>
+					       		<button type="submit" name="command" value="exit_from_account" class="btn btn-default form-control">${exit_user_accaunt}</button>
+					       	</div>
+					    </form>
+				 	</li>
+	    <!--    		</c:if>
+         -->
+<!-- Language link -->	
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Language <span class="caret"></span></a>     
+				    <form class="dropdown-menu" action="Controller" method="post">
+				    	<div class="form-group">
+				        	<input type="hidden" name="command" value="localization" />
+				          	<button type="submit" name="local" value="ru" class="btn btn-default form-control">Russian</button> 
+				          	<button type="submit" name="local" value="en" class="btn btn-default form-control">English</button> 
+				      	</div>
+					</form>
+				</li>
+      		</ul><!-- END right navbar -->      
+      	</div><!-- /.navbar-collapse -->
+ 	</div><!-- /.container-fluid -->
+</nav>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------>
+<!-- ---------------------------------------Authorization-----Modal --------------------------------------------------------------------- -->
+<!-- -------------------------------------------------------------------------------------------------------------------------------------- -->
+
+ <div class="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+    	<div class="modal-content">
+        <br>
+        
+        	<div class="bs-example bs-example-tabs">
+            	<ul id="myTab" class="nav nav-tabs">
+		    		<li class="active"><a href="#signin" data-toggle="tab">singin</a></li>
+		            <li class=""><a href="#signup" data-toggle="tab">register</a></li>
+		            <li class=""><a href="#why" data-toggle="tab">why</a></li>
+		       </ul>
+        	</div>
+      	
+      		<div class="modal-body">
+        		<div id="myTabContent" class="tab-content">
+        			<div class="tab-pane fade in" id="why">
+        				<p>message_why</p>
+        			</div>
+       
+        			<div class="tab-pane fade active in" id="signin">
+<!-- form LOGINIZATION CONTROLLER POST -->
+       					<form action="Controller" method="post" class="form-horizontal">
+            				<fieldset>
+<!-- line for command -->
+           						<input type="hidden" name="command" value="sing_in_user" />
+
+<!-- Sign In Form -->
+<!-- Text input -->
+            					<div class="control-group">
+              						<label class="control-label" for="userid">login_singin:</label>
+              						<div class="controls">
+                						<input required="" id="userid" name="user_login" type="text" class="form-control" placeholder="Archangel" class="input-medium" >
+              						</div>
+            					</div>
+
+<!-- Password input -->
+            					<div class="control-group">
+              						<label class="control-label" for="passwordinput">password_singin:</label>
+             						<div class="controls">
+                						<input required="" id="passwordinput" name="user_password" class="form-control" type="password" placeholder="********" class="input-medium">
+              						</div>
+            					</div>
+
+<!-- Button sing in -->
+				        		<div class="control-group">
+				              		<label class="control-label" for="signin"></label>
+				              		<div class="controls">
+				              			<a href="index"><input  value = "singin" id ="singin" name="singinBtn" class = "btn btn-success" type = "submit"/></a>
+				              		</div>
+				            	</div>
+	            		</fieldset>
+            		</form>
+        		</div>
+        
+<!-- FORM FOR SING UP  -->     
+        		<div class="tab-pane fade" id="signup">
+            		<form action="Controller" method="post" class="form-horizontal"> 			
+            			<fieldset>
+            				<input type="hidden" name="command" value="sing_up_user" />
+<!-- Sign Up Form -->
+
+<!-- Text input -->
+				            <div class="control-group">
+				            	<label class="control-label" for="userid">${login_register}:</label>
+				              	<div class="controls">
+				                	<input id="userid" name="user_login" class="form-control" type="text" placeholder="Archangel" class="input-large" required="">
+				              	</div>
+				            </div>
+
+<!-- name input -->
+				            <div class="control-group">
+				            	<label class="control-label" for="userid">${name_register}:</label>
+				              	<div class="controls">
+				                	<input id="userid" name="user_name" class="form-control" type="text" placeholder="${placeholder_name_register}" class="input-large" required="">
+				              	</div>
+				            </div>
+            
+<!-- surname input -->
+				            <div class="control-group">
+				            	<label class="control-label" for="userid">${surname_register}:</label>
+				              	<div class="controls">
+				                	<input id="userid" name="user_surname" class="form-control" type="text" placeholder="${placeholder_surname_register}" class="input-large" required="">
+				             	</div>
+				            </div>
+            
+<!-- date input -->
+				            <div class="control-group">
+				            	<label class="control-label" for="userid">${yearbirth_register}:</label>
+				              	<div class="controls">
+				                	<input class="form-control" type="date" value="11-11-2016" id="example-date-input" name="user_years_old">
+				              	</div>
+				            </div>
+<!-- Text input -->
+				            <div class="control-group">
+				            	<label class="control-label" for="Email">${email_register}:</label>
+				              	<div class="controls">
+				                	<input id="Email" name="user_email" class="form-control" type="text" placeholder="Exalltorius@gmail.com" class="input-large" required="">
+				              	</div>
+				            </div>
+            
+<!-- Password input -->
+				            <div class="control-group">
+				              	<label class="control-label" for="password">${password_register}:</label>
+				              	<div class="controls">
+				                	<input id="password" name="user_password" class="form-control" type="password" placeholder="********" class="input-large" required="">
+				                	<em>1-8 ${password_characters_register}</em>
+				              	</div>
+				            </div>
+            
+<!-- repeat password input -->
+				            <div class="control-group">
+				            	<label class="control-label" for="reenterpassword">${reenterpassword_register}:</label>
+				              	<div class="controls">
+				                	<input id="reenterpasswordUser" class="form-control" name="user_re_password" type="password" placeholder="********" class="input-large" required="">
+				              	</div>
+				            </div>
+            
+<!-- Button Sing up -->
+            				<div class="control-group">
+              					<label class="control-label" for="confirmsignup"></label>
+              					<div class="controls">
+             						<input  value = "${singup_register}" id ="confirmsignup" name="singinBtn" class = "btn btn-success" type = "submit"/>
+             
+              					</div>
+            				</div>
+            			</fieldset>
+            		</form>
+      			</div>
+    		</div>
+      	</div>
+      	<div class="modal-footer">
+        		<button type="button" class="btn btn-default" data-dismiss="modal">${close_auth}</button>
+      	</div>
+    </div>
+  </div>
+</div> 
+</body>
+</html>
